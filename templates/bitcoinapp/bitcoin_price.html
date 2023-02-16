@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>data</title>
+</head>
+<body>
+      <canvas id="bitcoinChart" width="400" height="400"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = [
+            {% for bitcoin_price in bitcoin_prices %}
+                "{{ bitcoin_price.timestamp }}",
+            {% endfor %}
+        ];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Bitcoin Price',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [
+                    {% for bitcoin_price in bitcoin_prices %}
+                        {{ bitcoin_price.price }},
+                    {% endfor %}
+                ],
+                fill: false,
+            }]
+        };
+        const config = {
+            type: 'line',
+            data,
+            options: {}
+        };
+        var myChart = new Chart(
+            document.getElementById('bitcoinChart'),
+            config
+        );
+        </script>
+    
+</body>
+</html>
